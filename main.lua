@@ -5,7 +5,7 @@ local function setLandscapeMode()
     -- 將螢幕旋轉至橫向
     native.setProperty("Orientation","landscapeRight")
 
-    -- 設定螢幕的寬度和高度
+    -- 設定螢幕的寬度和高度 x(-150,630) y(-35,355)
     local width, height = display.contentWidth, display.contentHeight
 
     -- 更新場景中的內容，以適應新的螢幕尺寸
