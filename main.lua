@@ -22,6 +22,11 @@ physics.start()
 local shape_1 = { -4.19999408721924,-13.9999971389771, 6.60000610351563,-13.5999975204468, 23.8000068664551,-5.19999742507935, 24.2000064849854,8.00000286102295, 17.4000072479248,14.8000030517578, -15.799994468689,14.8000030517578, -24.9999942779541,8.80000305175781, -24.5999946594238,-1.59999716281891 }
 shape_1.density = 1; shape_1.friction = 0.3; shape_1.bounce = 0.2; 
 
+local player = display.newImageRect("images/sprite_1.png", 50, 29)
+player.x = -90
+player.y = 305
+physics.addBody(player, "dynamic", {radius = 20, bounce = 0.2})
+
 local dispObj_1 = display.newImageRect( "images/sprite_1.png", 50, 29 )
 dispObj_1.x = -90
 dispObj_1.y = 305
@@ -52,7 +57,32 @@ wall_Up.rotation = -180
 physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 
 --]]
+local jumpHeight = -0.3
+local onGround = false
 
+local function onCollision(event)
+    if event.phase == "began" then
+        onGround = true
+    elseif event.phase == "ended" then
+        onGround = false
+    end
+end
+
+player:addEventListener("collision", onCollision)
+
+local function jump(event)
+    if event.phase == "began" and onGround then
+        player:applyLinearImpulse(0, jumpHeight, player.x, player.y)
+    end
+end
+
+-- 監聽螢幕觸控事件來觸發跳躍
+Runtime:addEventListener("touch", jump)
+
+local function shoot(event)
+    X=event.x
+    Y=event.y
+end
 local function Acount()
     print(1)
 end
