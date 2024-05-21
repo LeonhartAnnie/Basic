@@ -43,8 +43,11 @@ wall_Up.rotation = -180
 physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 
 --]]
-
 -- 呼叫函數設置橫向模式
+local function Acount()
+    print(1)
+end
 setLandscapeMode()
+timer.performWithDelay( 1000,Acount,5)
 
 
