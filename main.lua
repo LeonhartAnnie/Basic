@@ -11,6 +11,8 @@ local function setLandscapeMode()
     -- 更新場景中的內容，以適應新的螢幕尺寸
     -- 這裡可以調整你的場景中的物件位置和大小
 end
+--物件宣告
+---[[  
 
 local physics = require( "physics" )
 physics.start()
@@ -40,6 +42,7 @@ wall_Up.y = -35
 wall_Up.rotation = -180
 physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 
+--]]
 
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
