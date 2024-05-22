@@ -1,5 +1,10 @@
 -- 設定橫向模式
+package.path = package.path .. ";./lua/?.lua"
+
 local widget = require( "widget" )
+local physics = require( "physics" )
+local generator = require("generator")
+
 local function setLandscapeMode()
     display.setStatusBar(display.HiddenStatusBar) -- 隱藏狀態欄
 
@@ -15,7 +20,7 @@ end
 --物件宣告
 ---[[  
 
-local physics = require( "physics" )
+
 physics.start()
 --physics.setDrawMode( "hybrid" )
 --physics.setDrawMode( "debug" )
@@ -23,11 +28,12 @@ physics.start()
 local shape_1 = { -4.99999380111694,-24.7999973297119, -29.7999935150146,0.800002694129944, -29.3999938964844,14.4000024795532, -18.9999942779541,23.2000026702881, 17.8000068664551,24.8000030517578, 29.8000068664551,14.0000028610229, 29.4000072479248,-5.59999752044678, 8.60000610351563,-24.7999973297119 }
 shape_1.density = 1; shape_1.friction = 0.3; shape_1.bounce = 0.2; 
 
-local player = display.newImageRect( "images/sprite_0.png", 40, 50 )
-player.x = 168
-player.y = 147
-player.rotation = 0
-physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
+--init player, wall
+local player = generator.addPlayer()
+local wall_Up = generator.addwallUp()
+local wall_Down = generator.addwallDown()
+local wall_Right = generator.addwall_Right()
+local wall_Left = generator.addwall_Left()
 
 
 
@@ -38,28 +44,7 @@ physics.addBody( dispObj_1,
     {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
 )
 
-local wall_Down = display.newImageRect( "images/ground.png", 710, 70 )
-wall_Down.x = 240
-wall_Down.y = 355 --355
-physics.addBody( wall_Down, "static", { density=1, friction=0.3, bounce=0.2 } )
 
-local wall_Left = display.newImageRect( "images/ground.png", 480, 70 )
-wall_Left.x = -150
-wall_Left.y = 145
-wall_Left.rotation = 90
-physics.addBody( wall_Left, "static", { density=1, friction=0.3, bounce=0.2 } )
-
-local wall_Right = display.newImageRect( "images/ground.png", 480, 70 )
-wall_Right.x = 630
-wall_Right.y = 145
-wall_Right.rotation = -90
-physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
-
-local wall_Up = display.newImageRect( "images/ground.png", 480, 70 )
-wall_Up.x = 240
-wall_Up.y = -35
-wall_Up.rotation = -180
-physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 
 --]]
 local jumpHeight_P = -15
