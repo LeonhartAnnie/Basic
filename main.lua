@@ -34,24 +34,16 @@ local wall_Up = generator.addwallUp()
 local wall_Down = generator.addwallDown()
 local wall_Right = generator.addwall_Right()
 local wall_Left = generator.addwall_Left()
+local monster = generator.addMonster()
 
-
-
-local dispObj_1 = display.newImageRect( "images/sprite_1.png",60, 50 )
-dispObj_1.x = -90
-dispObj_1.y = 100
-physics.addBody( dispObj_1, 
-    {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
-)
 
 local jumpHeight_P = -15
 local jumpHeight_M = -15
 local onGround = false
 
 local function onCollision(event)
-    if event.phase == "began" then
+    if event.phase == "began" and event.other.id == "ground" then
         onGround = true
-        print(event.target)
     elseif event.phase == "ended" then
         onGround = false
     end
@@ -73,7 +65,7 @@ local function shoot(event)
     Y=event.y
 end
 local function Acount()
-    dispObj_1:applyLinearImpulse(5, jumpHeight_M, dispObj_1.x, dispObj_1.y)
+    monster:applyLinearImpulse(5, jumpHeight_M, monster.x, monster.y)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
