@@ -47,6 +47,8 @@ local speed_M = 7
 local jumpHeight_P = -15
 local jumpHeight_M = -20
 local onGround = false
+local table_right = nil
+local table_left = nil
 
 local function onCollision_P(event)
     if event.other.id == "ground" then
@@ -96,11 +98,11 @@ setLandscapeMode()
 timer.performWithDelay( 2000,Jump_M,-1)
 
 local b_Press_left = function( event )
-    player:applyLinearImpulse(jumpHeight_P,0, player.x, player.y)
+    player:applyLinearImpulse(-5,0, player.x, player.y)
 end
 
 local b_Press_right = function( event )
-    player:applyLinearImpulse(-jumpHeight_P,0, player.x, player.y)
+    player:applyLinearImpulse(5,0, player.x, player.y)
 end
 
 local button_left = widget.newButton
@@ -112,7 +114,18 @@ local button_left = widget.newButton
         labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
         fontSize = 20,                                -- 按鈕文字字體大小
         emboss = true,                                -- 立體效果
-        onPress = b_Press_left,                        -- 觸發按下按鈕事件要執行的函式
+        onPress = function(event)
+            -- 啟動計時器，每隔一段時間執行一次
+            local timerDuration = 100  -- 設定計時器的間隔時間（毫秒）
+            table_left=timer.performWithDelay(timerDuration, b_Press_left, 0)
+            -- 0 表示無限次
+        end,
+        onRelease = function(event)
+            -- 停止計時器
+            timer.cancel(table_left)
+            -- 在這裡執行放開按鈕時的操作
+            print("Button released!")
+        end,
 }
 button_left.x = -40; button_left.y = 280
 local button_right = widget.newButton
@@ -127,11 +140,12 @@ local button_right = widget.newButton
         onPress = function(event)
             -- 啟動計時器，每隔一段時間執行一次
             local timerDuration = 100  -- 設定計時器的間隔時間（毫秒）
-            timer.performWithDelay(timerDuration, b_Press_right, 0)  -- 0 表示無限次
+            table_right=timer.performWithDelay(timerDuration, b_Press_right, 0)
+            -- 0 表示無限次
         end,
         onRelease = function(event)
             -- 停止計時器
-            timer.cancel(event.source)
+            timer.cancel(table_right)
             -- 在這裡執行放開按鈕時的操作
             print("Button released!")
         end,
