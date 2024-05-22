@@ -6,12 +6,13 @@ function generator.addPlayer()
     player.x = 168
     player.y = 147
     player.rotation = 0
+    player.id = "player"
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end
 
 function generator.addwallUp()
-    local wall_Up = display.newImageRect( "images/ground.png", 480, 70 )
+    local wall_Up = display.newImageRect( "images/ground.png", 710, 70 )
     wall_Up.x = 240
     wall_Up.y = -35
     wall_Up.rotation = -180
@@ -22,6 +23,7 @@ function generator.addwallDown()
     local wall_Down = display.newImageRect( "images/ground.png", 710, 70 )
     wall_Down.x = 240
     wall_Down.y = 355 --355
+    wall_Down.id = "ground"
     physics.addBody( wall_Down, "static", { density=1, friction=0.3, bounce=0.2 } )
     return wall_Down
 end
@@ -41,7 +43,6 @@ function generator.addwall_Right()
     wall_Right.y = 145
     wall_Right.rotation = -90
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
-    local wall_Up = display.newImageRect( "images/ground.png", 480, 70 )
 end
 
 return generator
