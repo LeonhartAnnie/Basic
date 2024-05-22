@@ -1,4 +1,5 @@
 -- 設定橫向模式
+local widget = require( "widget" )
 local function setLandscapeMode()
     display.setStatusBar(display.HiddenStatusBar) -- 隱藏狀態欄
 
@@ -19,20 +20,24 @@ physics.start()
 --physics.setDrawMode( "hybrid" )
 --physics.setDrawMode( "debug" )
 
-local shape_1 = { -4.19999408721924,-13.9999971389771, 6.60000610351563,-13.5999975204468, 23.8000068664551,-5.19999742507935, 24.2000064849854,8.00000286102295, 17.4000072479248,14.8000030517578, -15.799994468689,14.8000030517578, -24.9999942779541,8.80000305175781, -24.5999946594238,-1.59999716281891 }
+local shape_1 = { -4.99999380111694,-24.7999973297119, -29.7999935150146,0.800002694129944, -29.3999938964844,14.4000024795532, -18.9999942779541,23.2000026702881, 17.8000068664551,24.8000030517578, 29.8000068664551,14.0000028610229, 29.4000072479248,-5.59999752044678, 8.60000610351563,-24.7999973297119 }
 shape_1.density = 1; shape_1.friction = 0.3; shape_1.bounce = 0.2; 
 
-local player = display.newImageRect("images/sprite_1.png", 50, 29)
-player.x = -90
-player.y = 305
-physics.addBody(player, "dynamic", {radius = 20, bounce = 0.2})
+local player = display.newImageRect( "images/sprite_0.png", 40, 50 )
+player.x = 168
+player.y = 147
+player.rotation = 0
+physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
 
-local dispObj_1 = display.newImageRect( "images/sprite_1.png", 50, 29 )
+
+
+local dispObj_1 = display.newImageRect( "images/sprite_1.png",60, 50 )
 dispObj_1.x = -90
-dispObj_1.y = 305
+dispObj_1.y = 100
 physics.addBody( dispObj_1, 
     {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
 )
+
 local wall_Down = display.newImageRect( "images/ground.png", 710, 70 )
 wall_Down.x = 240
 wall_Down.y = 355 --355
@@ -57,7 +62,8 @@ wall_Up.rotation = -180
 physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 
 --]]
-local jumpHeight = -0.3
+local jumpHeight_P = -15
+local jumpHeight_M = -15
 local onGround = false
 
 local function onCollision(event)
@@ -72,7 +78,7 @@ player:addEventListener("collision", onCollision)
 
 local function jump(event)
     if event.phase == "began" and onGround then
-        player:applyLinearImpulse(0, jumpHeight, player.x, player.y)
+        player:applyLinearImpulse(10, jumpHeight_P, player.x, player.y)
     end
 end
 
@@ -84,11 +90,11 @@ local function shoot(event)
     Y=event.y
 end
 local function Acount()
-    print(1)
+    dispObj_1:applyLinearImpulse(5, jumpHeight_M, dispObj_1.x, dispObj_1.y)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-timer.performWithDelay( 1000,Acount,5)
+timer.performWithDelay( 2000,Acount,-1)
 
 
 
