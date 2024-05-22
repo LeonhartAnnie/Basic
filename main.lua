@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./lua/?.lua"
+package.path = package.path .. ";./Basic/lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
@@ -42,6 +42,7 @@ local jumpHeight_M = -15
 local onGround = false
 
 local function onCollision(event)
+    if event.phase == "began" and event.other.id == "ground" then
     if event.phase == "began" and event.other.id == "ground" then
         onGround = true
     elseif event.phase == "ended" then

@@ -24,14 +24,14 @@ function generator.addPlayer()
     player.x = 168
     player.y = 147
     player.rotation = 0
-    player.id = "owo"
+    player.id = "player"
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end
 
 
 function generator.addwallUp()
-    local wall_Up = display.newImageRect( "images/ground.png", 480, 70 )
+    local wall_Up = display.newImageRect( "images/ground.png", 710, 70 )
     wall_Up.x = 240
     wall_Up.y = -35
     wall_Up.rotation = -180
