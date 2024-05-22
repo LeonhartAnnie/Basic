@@ -44,9 +44,6 @@ physics.addBody( dispObj_1,
     {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
 )
 
-
-
---]]
 local jumpHeight_P = -15
 local jumpHeight_M = -15
 local onGround = false
@@ -54,6 +51,7 @@ local onGround = false
 local function onCollision(event)
     if event.phase == "began" then
         onGround = true
+        print(event.target)
     elseif event.phase == "ended" then
         onGround = false
     end

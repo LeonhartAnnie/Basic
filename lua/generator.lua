@@ -41,7 +41,7 @@ function generator.addwall_Right()
     wall_Right.y = 145
     wall_Right.rotation = -90
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
-    return wall_Right
+    local wall_Up = display.newImageRect( "images/ground.png", 480, 70 )
 end
 
 return generator
