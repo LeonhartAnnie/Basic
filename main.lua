@@ -34,43 +34,107 @@ local wall_Up = generator.addwallUp()
 local wall_Down = generator.addwallDown()
 local wall_Right = generator.addwall_Right()
 local wall_Left = generator.addwall_Left()
-local monster = generator.addMonster()
 
+local dispObj_1 = display.newImageRect( "images/sprite_1.png",60, 50 )
+dispObj_1.x = -90
+dispObj_1.y = 100
+physics.addBody( dispObj_1, 
+    {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
+)
 
+local direction_M = 1
+local speed_M = 7
 local jumpHeight_P = -15
-local jumpHeight_M = -15
+local jumpHeight_M = -20
 local onGround = false
 
-local function onCollision(event)
-    if event.phase == "began" and event.other.id == "ground" then
-    if event.phase == "began" and event.other.id == "ground" then
+local function onCollision_P(event)
+    if event.other.id == "ground" then
         onGround = true
-    elseif event.phase == "ended" then
-        onGround = false
+        print(onGround)
+    elseif event.other.id == "monster" then
+        print("Ouch!")
     end
 end
 
-player:addEventListener("collision", onCollision)
+local function onCollision_M(event)
+    if event.phase == "began" and event.other.id == "wall" then
+        math.randomseed(os.time())
+        direction_M = direction_M * (-1)
+        speed_M=math.random(13)
+        if speed_M<4 then
+            speed_M = 5
+        end
+        speed_M = speed_M*direction_M
+        print(speed_M)
+    end
+end
 
-local function jump(event)
+player:addEventListener("collision", onCollision_P)
+dispObj_1:addEventListener("collision", onCollision_M)
+
+local function jump_P(event)
     if event.phase == "began" and onGround then
-        player:applyLinearImpulse(10, jumpHeight_P, player.x, player.y)
+        onGround=false
+        print(onGround)
+        player:applyLinearImpulse(0, jumpHeight_P, player.x, player.y)
     end
 end
 
 -- 監聽螢幕觸控事件來觸發跳躍
-Runtime:addEventListener("touch", jump)
+Runtime:addEventListener("touch", jump_P)
 
 local function shoot(event)
     X=event.x
     Y=event.y
 end
-local function Acount()
-    monster:applyLinearImpulse(5, jumpHeight_M, monster.x, monster.y)
+local function Jump_M()
+    dispObj_1:applyLinearImpulse(speed_M, jumpHeight_M, dispObj_1.x, dispObj_1.y)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-timer.performWithDelay( 2000,Acount,-1)
+timer.performWithDelay( 2000,Jump_M,-1)
 
+local b_Press_left = function( event )
+    player:applyLinearImpulse(jumpHeight_P,0, player.x, player.y)
+end
 
+local b_Press_right = function( event )
+    player:applyLinearImpulse(-jumpHeight_P,0, player.x, player.y)
+end
 
+local button_left = widget.newButton
+{
+        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
+        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
+        label = "Left",                              -- 按鈕上顯示的文字
+        font = native.systemFont,                     -- 按鈕使用字型
+        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
+        fontSize = 20,                                -- 按鈕文字字體大小
+        emboss = true,                                -- 立體效果
+        onPress = b_Press_left,                        -- 觸發按下按鈕事件要執行的函式
+}
+button_left.x = -40; button_left.y = 280
+local button_right = widget.newButton
+{
+        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
+        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
+        label = "Right",                              -- 按鈕上顯示的文字
+        font = native.systemFont,                     -- 按鈕使用字型
+        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
+        fontSize = 20,                                -- 按鈕文字字體大小
+        emboss = true,                                -- 立體效果
+        onPress = function(event)
+            -- 啟動計時器，每隔一段時間執行一次
+            local timerDuration = 100  -- 設定計時器的間隔時間（毫秒）
+            timer.performWithDelay(timerDuration, b_Press_right, 0)  -- 0 表示無限次
+        end,
+        onRelease = function(event)
+            -- 停止計時器
+            timer.cancel(event.source)
+            -- 在這裡執行放開按鈕時的操作
+            print("Button released!")
+        end,
+        
+}
+button_right.x = 30; button_right.y = 280
