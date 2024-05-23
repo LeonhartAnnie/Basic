@@ -19,10 +19,8 @@ function movement.P_move_right(player)
 end
 
 function movement.jump_P(player, event)
-    print(onGround)
     if event.phase == "began" and onGround then
         onGround=false
-        print(onGround)
         player:applyLinearImpulse(0, jumpHeight_P, player.x, player.y)
     end
 end
