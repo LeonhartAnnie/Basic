@@ -1,6 +1,7 @@
 -- 設定橫向模式
 package.path = package.path .. ";./lua/?.lua"
 
+local movieclip = require("movieclip")
 local physics = require( "physics" )
 local generator = require("generator")
 local createButton = require("createButton")
@@ -41,7 +42,6 @@ local jumpHeight_M = -20
 Move_Left = false
 Move_Right = false
 onGround = false
-
 local function onCollision_P(event)
     if event.other.id == "ground" then
         onGround = true
