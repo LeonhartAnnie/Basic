@@ -5,6 +5,7 @@ local physics = require( "physics" )
 local generator = require("generator")
 local createButton = require("createButton")
 local movement = require("movement")
+local collision = require("collison")
 
 local function setLandscapeMode()
     display.setStatusBar(display.HiddenStatusBar) -- 隱藏狀態欄
@@ -41,42 +42,14 @@ Move_Left = false
 Move_Right = false
 onGround = false
 
-
-local function onCollision_P(event)
-    if event.other.id == "ground" then
-        onGround = true
-        --print(onGround)
-    elseif event.other.id == "monster" then
-        player.health = player.health-1
-        print(player.health)
-    end
-end
-
-local function Jump_M()
-    monster:applyLinearImpulse(speed_M, jumpHeight_M, monster.x, monster.y)
-end
-
-local function onCollision_M(event)
-    if event.phase == "ended" and event.other.id == "wall" then
-        math.randomseed(os.time())
-        direction_M = direction_M * (-1)
-        speed_M = math.random(5,20)
-        speed_M = speed_M*direction_M
-        print(speed_M)
-    end
-end
-
 timer.performWithDelay(5000, generator.addMonster, 0)
-monster:addEventListener("collision", onCollision_M)
-player:addEventListener("collision", onCollision_P)
 
 local function shoot(event)
     
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-timer.performWithDelay(2000,Jump_M,0)
-timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
+
 
 -- 監聽螢幕觸控事件來觸發射擊
 Runtime:addEventListener("touch", shoot)

@@ -1,4 +1,6 @@
 local physics = require( "physics" )
+local collision = require("collison")
+local movement = require("movement")
 local generator = {}
 
 function generator.addMonster()
@@ -20,7 +22,11 @@ function generator.addMonster()
         monster.type = "jump"
     end
     print(x_space[ranPlace])
-    physics.addBody( monster, {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
+    physics.addBody( monster, {density=shape_1.density, friction=
+    shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
+    monster:addEventListener("collision", collision.onCollision_M)
+    timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
+    timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
     return monster
 end
 
@@ -33,6 +39,7 @@ function generator.addPlayer()
     player.isFixedRotation = true
     player.health = 6
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
+    player:addEventListener("collision", function(event) collision.onCollision_P(event, player) end)
     return player
 end
 
