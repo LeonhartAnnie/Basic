@@ -1,7 +1,6 @@
 -- 設定橫向模式
 package.path = package.path .. ";./lua/?.lua"
 
-local widget = require( "widget" )
 local physics = require( "physics" )
 local generator = require("generator")
 local createButton = require("createButton")
@@ -15,13 +14,7 @@ local function setLandscapeMode()
 
     -- 設定螢幕的寬度和高度 x(-115,595) y(0,320)
     local width, height = display.contentWidth, display.contentHeight
-
-    -- 更新場景中的內容，以適應新的螢幕尺寸
-    -- 這裡可以調整你的場景中的物件位置和大小
 end
---物件宣告
----[[  
-
 
 physics.start()
 --physics.setDrawMode( "hybrid" )
@@ -40,6 +33,7 @@ local button_left = createButton.left()
 local button_right = createButton.right()
 local button_Jump = createButton.Jump(player)
 
+local health = player.health
 local direction_M = 1
 local speed_M = 7
 local jumpHeight_M = -20
@@ -51,9 +45,10 @@ onGround = false
 local function onCollision_P(event)
     if event.other.id == "ground" then
         onGround = true
-        print(onGround)
+        --print(onGround)
     elseif event.other.id == "monster" then
-        print("Ouch!")
+        player.health = player.health-1
+        print(player.health)
     end
 end
 
@@ -65,7 +60,7 @@ local function onCollision_M(event)
     if event.phase == "ended" and event.other.id == "wall" then
         math.randomseed(os.time())
         direction_M = direction_M * (-1)
-        speed_M = math.random(5,13)
+        speed_M = math.random(5,20)
         speed_M = speed_M*direction_M
         print(speed_M)
     end
@@ -75,20 +70,16 @@ timer.performWithDelay(5000, generator.addMonster, 0)
 monster:addEventListener("collision", onCollision_M)
 player:addEventListener("collision", onCollision_P)
 
-
-
-
--- 監聽螢幕觸控事件來觸發跳躍
--- Runtime:addEventListener("touch", jump_P)
-
 local function shoot(event)
-    X=event.x
-    Y=event.y
+    
 end
-
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
 timer.performWithDelay(2000,Jump_M,0)
+timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
+
+-- 監聽螢幕觸控事件來觸發射擊
+Runtime:addEventListener("touch", shoot)
 
 Runtime:addEventListener("enterFrame", function() movement.P_move_left(player) end)
 Runtime:addEventListener("enterFrame", function() movement.P_move_right(player) end)

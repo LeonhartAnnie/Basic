@@ -31,6 +31,10 @@ function generator.addPlayer()
     player.rotation = 0
     player.id = "player"
     player.isFixedRotation = true
+<<<<<<< Updated upstream
+=======
+    player.health = 6
+>>>>>>> Stashed changes
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end
