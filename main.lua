@@ -1,6 +1,7 @@
 -- 設定橫向模式
 package.path = package.path .. ";./lua/?.lua"
 
+local movieclip = require("movieclip")
 local physics = require( "physics" )
 local generator = require("generator")
 local createButton = require("createButton")
