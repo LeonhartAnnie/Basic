@@ -73,6 +73,7 @@ function generator.addwall_Right()
     wall_Right.rotation = -90
     wall_Right.id = "wall"
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
+    return wall_Right
 end
 
 return generator
