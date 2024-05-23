@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
@@ -34,13 +34,7 @@ local wall_Up = generator.addwallUp()
 local wall_Down = generator.addwallDown()
 local wall_Right = generator.addwall_Right()
 local wall_Left = generator.addwall_Left()
-
-local dispObj_1 = display.newImageRect( "images/sprite_1.png",60, 50 )
-dispObj_1.x = -90
-dispObj_1.y = 100
-physics.addBody( dispObj_1, 
-    {density=shape_1.density, friction=shape_1.friction, bounce=shape_1.bounce, shape=shape_1}
-)
+local monster = generator.addMonster()
 
 local direction_M = 1
 local speed_M = 7
@@ -73,7 +67,7 @@ local function onCollision_M(event)
 end
 
 player:addEventListener("collision", onCollision_P)
-dispObj_1:addEventListener("collision", onCollision_M)
+monster:addEventListener("collision", onCollision_M)
 
 local function jump_P(event)
     if event.phase == "began" and onGround then
@@ -91,7 +85,7 @@ local function shoot(event)
     Y=event.y
 end
 local function Jump_M()
-    dispObj_1:applyLinearImpulse(speed_M, jumpHeight_M, dispObj_1.x, dispObj_1.y)
+    monster:applyLinearImpulse(speed_M, jumpHeight_M, monster.x, monster.y)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
