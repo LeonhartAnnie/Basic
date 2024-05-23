@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./lua/?.lua"
+package.path = package.path .. ";Basic/lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
@@ -42,7 +42,8 @@ local jumpHeight_P = -15
 local jumpHeight_M = -20
 local onGround = false
 local table_right = nil
-local table_left = nil
+local table_left = false
+local Move_Left = false
 
 local function onCollision_P(event)
     if event.other.id == "ground" then
@@ -91,9 +92,22 @@ end
 setLandscapeMode()
 timer.performWithDelay(2000,Jump_M,-1)
 
-local b_Press_left = function( event )
-    player:applyLinearImpulse(-5,0, player.x, player.y)
+local function P_move_left(event)
+    if Move_Left == true then
+        player.x=player.x-5
+        --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )
+        print(Move_Left)
+    end
 end
+
+local b_Press_left = function( event )
+    if event.phase == "began" or event.phase == "moved" then
+        Move_Left=true
+    elseif event.phase == "ended" then
+        Move_Left=false
+    end
+end
+Runtime:addEventListener("enterFrame", P_move_left)
 
 local b_Press_right = function( event )
     player:applyLinearImpulse(5,0, player.x, player.y)
@@ -108,18 +122,7 @@ local button_left = widget.newButton
         labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
         fontSize = 20,                                -- 按鈕文字字體大小
         emboss = true,                                -- 立體效果
-        onPress = function(event)
-            -- 啟動計時器，每隔一段時間執行一次
-            local timerDuration = 100  -- 設定計時器的間隔時間（毫秒）
-            table_left=timer.performWithDelay(timerDuration, b_Press_left, 0)
-            -- 0 表示無限次
-        end,
-        onRelease = function(event)
-            -- 停止計時器
-            timer.cancel(table_left)
-            -- 在這裡執行放開按鈕時的操作
-            print("Button released!")
-        end,
+        onEvent = b_Press_left,
 }
 button_left.x = -40; button_left.y = 280
 local button_right = widget.newButton
@@ -159,3 +162,4 @@ local button_Jump = widget.newButton
         
 }
 button_Jump.x = 280; button_Jump.y = 280
+
