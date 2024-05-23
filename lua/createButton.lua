@@ -1,5 +1,5 @@
 local widget = require( "widget" )
-
+local movement = require("movement")
 local createButton = {}
 
 local b_Press_left = function( event )
@@ -7,6 +7,14 @@ local b_Press_left = function( event )
         Move_Left=true
     elseif event.phase == "ended" then
         Move_Left=false
+    end
+end
+
+local b_Press_right = function( event )
+    if event.phase == "began" or event.phase == "moved" then
+        Move_Right=true
+    elseif event.phase == "ended" then
+        Move_Right=false
     end
 end
 
@@ -23,7 +31,7 @@ function createButton.left()
         emboss = true,
         x = -40,
         y = 280,
-        OnEvent = b_Press_left,                           
+        onEvent = b_Press_left,                           
     }
     return button_left
 end
@@ -39,7 +47,8 @@ function createButton.right()
         fontSize = 20,                                -- 按鈕文字字體大小
         emboss = true,                                -- 立體效果
         x = 30,
-        y = 280,                           
+        y = 280,
+        onEvent = b_Press_right,                           
     }
     return button_right
 end
@@ -55,7 +64,7 @@ function createButton.Jump()
             fontSize = 20,                                -- 按鈕文字字體大小
             emboss = true,                                -- 立體效果
             x = 280,
-            y = 280,
+            y = 280, 
     }
     return button_Jump
 end

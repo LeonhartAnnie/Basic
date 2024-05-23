@@ -40,12 +40,11 @@ local monster = generator.addMonster()
 local button_left = createButton.left()
 local button_right = createButton.right()
 local button_Jump = createButton.Jump()
+button_Jump.onEvent = function(event) movement.jump_P(player, event) end
 
 local direction_M = 1
 local speed_M = 7
-local jumpHeight_P = -15
 local jumpHeight_M = -20
-local onGround = false
 local table_right = nil
 local table_left = false
 Move_Left = false
@@ -76,13 +75,7 @@ end
 player:addEventListener("collision", onCollision_P)
 monster:addEventListener("collision", onCollision_M)
 
-local function jump_P(event)
-    if event.phase == "began" and onGround then
-        onGround=false
-        print(onGround)
-        player:applyLinearImpulse(0, jumpHeight_P, player.x, player.y)
-    end
-end
+
 
 -- 監聽螢幕觸控事件來觸發跳躍
 -- Runtime:addEventListener("touch", jump_P)
@@ -98,13 +91,9 @@ end
 setLandscapeMode()
 timer.performWithDelay(2000,Jump_M,-1)
 
-local P_move_left = movement.P_move_left(player)
-local P_move_right = movement.P_move_right(player)
+Runtime:addEventListener("enterFrame", function() movement.P_move_left(player) end)
+Runtime:addEventListener("enterFrame", function() movement.P_move_right(player) end)
 
-assert(P_move_left ~= nil, "moveLeft is nil")
-assert(P_move_right ~= nil, "moveRight is nil")
--- Runtime:addEventListener("enterFrame", P_move_left)
--- Runtime:addEventListener("enterFrame", P_move_right)
 
 
 
