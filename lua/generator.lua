@@ -14,7 +14,6 @@ function generator.addMonster()
     monster.id = "monster"
     monster.rotation = 0
     monster.isFixedRotation = true
-    monster.isFixed.rotation = true
     if(ranNum == 2 or ranNum == 3) then
         monster.type = "fly"
     else
@@ -32,7 +31,6 @@ function generator.addPlayer()
     player.rotation = 0
     player.id = "player"
     player.isFixedRotation = true
-    player.isFixed.rotation = true
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end

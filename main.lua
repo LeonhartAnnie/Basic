@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
