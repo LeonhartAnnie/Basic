@@ -1,6 +1,5 @@
 local jumpHeight_P = -15
 local movement = {}
-local onGround = false
 
 
 function movement.P_move_left(player)
@@ -20,7 +19,7 @@ function movement.P_move_right(player)
 end
 
 function movement.jump_P(player, event)
-    print("owo")
+    print(onGround)
     if event.phase == "began" and onGround then
         onGround=false
         print(onGround)

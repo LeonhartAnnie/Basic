@@ -53,7 +53,7 @@ function createButton.right()
     return button_right
 end
 
-function createButton.Jump()
+function createButton.Jump(player)
     local button_Jump = widget.newButton
     {
             defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
@@ -64,7 +64,8 @@ function createButton.Jump()
             fontSize = 20,                                -- 按鈕文字字體大小
             emboss = true,                                -- 立體效果
             x = 280,
-            y = 280, 
+            y = 280,
+            onEvent = function (event) movement.jump_P(player, event) end
     }
     return button_Jump
 end

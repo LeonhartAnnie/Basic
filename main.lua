@@ -39,8 +39,7 @@ local wall_Left = generator.addwall_Left()
 local monster = generator.addMonster()
 local button_left = createButton.left()
 local button_right = createButton.right()
-local button_Jump = createButton.Jump()
-button_Jump.onEvent = function(event) movement.jump_P(player, event) end
+local button_Jump = createButton.Jump(player)
 
 local direction_M = 1
 local speed_M = 7
@@ -49,6 +48,7 @@ local table_right = nil
 local table_left = false
 Move_Left = false
 Move_Right = false
+onGround = false
 
 local function onCollision_P(event)
     if event.other.id == "ground" then
