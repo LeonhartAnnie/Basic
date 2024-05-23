@@ -30,7 +30,6 @@ local wall_Up = generator.addwallUp()
 local wall_Down = generator.addwallDown()
 local wall_Right = generator.addwall_Right()
 local wall_Left = generator.addwall_Left()
-local monster = generator.addMonster()
 local button_left = createButton.left()
 local button_right = createButton.right()
 local button_Jump = createButton.Jump(player)
@@ -65,6 +64,8 @@ local function onCollision_M(event)
         print(speed_M)
     end
 end
+
+timer.performWithDelay(5000, generator.addMonster, 0)
 monster:addEventListener("collision", onCollision_M)
 player:addEventListener("collision", onCollision_P)
 
