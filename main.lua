@@ -1,9 +1,11 @@
 -- 設定橫向模式
-package.path = package.path .. ";Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
 local generator = require("generator")
+local createButton = require("createButton")
+local movement = require("movement")
 
 local function setLandscapeMode()
     display.setStatusBar(display.HiddenStatusBar) -- 隱藏狀態欄
@@ -35,6 +37,9 @@ local wall_Down = generator.addwallDown()
 local wall_Right = generator.addwall_Right()
 local wall_Left = generator.addwall_Left()
 local monster = generator.addMonster()
+local button_left = createButton.left()
+local button_right = createButton.right()
+local button_Jump = createButton.Jump()
 
 local direction_M = 1
 local speed_M = 7
@@ -43,7 +48,8 @@ local jumpHeight_M = -20
 local onGround = false
 local table_right = nil
 local table_left = false
-local Move_Left = false
+Move_Left = false
+Move_Right = false
 
 local function onCollision_P(event)
     if event.other.id == "ground" then
@@ -92,74 +98,14 @@ end
 setLandscapeMode()
 timer.performWithDelay(2000,Jump_M,-1)
 
-local function P_move_left(event)
-    if Move_Left == true then
-        player.x=player.x-5
-        --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )
-        print(Move_Left)
-    end
-end
+local P_move_left = movement.P_move_left(player)
+local P_move_right = movement.P_move_right(player)
 
-local b_Press_left = function( event )
-    if event.phase == "began" or event.phase == "moved" then
-        Move_Left=true
-    elseif event.phase == "ended" then
-        Move_Left=false
-    end
-end
-Runtime:addEventListener("enterFrame", P_move_left)
+assert(P_move_left ~= nil, "moveLeft is nil")
+assert(P_move_right ~= nil, "moveRight is nil")
+-- Runtime:addEventListener("enterFrame", P_move_left)
+-- Runtime:addEventListener("enterFrame", P_move_right)
 
-local b_Press_right = function( event )
-    player:applyLinearImpulse(5,0, player.x, player.y)
-end
 
-local button_left = widget.newButton
-{
-        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
-        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
-        label = "Left",                              -- 按鈕上顯示的文字
-        font = native.systemFont,                     -- 按鈕使用字型
-        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
-        fontSize = 20,                                -- 按鈕文字字體大小
-        emboss = true,                                -- 立體效果
-        onEvent = b_Press_left,
-}
-button_left.x = -40; button_left.y = 280
-local button_right = widget.newButton
-{
-        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
-        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
-        label = "Right",                              -- 按鈕上顯示的文字
-        font = native.systemFont,                     -- 按鈕使用字型
-        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
-        fontSize = 20,                                -- 按鈕文字字體大小
-        emboss = true,                                -- 立體效果
-        onPress = function(event)
-            -- 啟動計時器，每隔一段時間執行一次
-            local timerDuration = 100  -- 設定計時器的間隔時間（毫秒）
-            table_right=timer.performWithDelay(timerDuration, b_Press_right, 0)
-            -- 0 表示無限次
-        end,
-        onRelease = function(event)
-            -- 停止計時器
-            timer.cancel(table_right)
-            -- 在這裡執行放開按鈕時的操作
-            print("Button released!")
-        end,
-        
-}
-button_right.x = 30; button_right.y = 280
-local button_Jump = widget.newButton
-{
-        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
-        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
-        label = "Jump",                              -- 按鈕上顯示的文字
-        font = native.systemFont,                     -- 按鈕使用字型
-        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
-        fontSize = 20,                                -- 按鈕文字字體大小
-        emboss = true,                                -- 立體效果
-        onPress = jump_P,
-        
-}
-button_Jump.x = 280; button_Jump.y = 280
+
 
