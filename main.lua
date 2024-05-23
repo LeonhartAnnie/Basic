@@ -84,7 +84,7 @@ local function jump_P(event)
 end
 
 -- 監聽螢幕觸控事件來觸發跳躍
-Runtime:addEventListener("touch", jump_P)
+-- Runtime:addEventListener("touch", jump_P)
 
 local function shoot(event)
     X=event.x
@@ -95,7 +95,7 @@ local function Jump_M()
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-timer.performWithDelay( 2000,Jump_M,-1)
+timer.performWithDelay(2000,Jump_M,-1)
 
 local b_Press_left = function( event )
     player:applyLinearImpulse(-5,0, player.x, player.y)
@@ -152,3 +152,16 @@ local button_right = widget.newButton
         
 }
 button_right.x = 30; button_right.y = 280
+local button_Jump = widget.newButton
+{
+        defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
+        overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
+        label = "Jump",                              -- 按鈕上顯示的文字
+        font = native.systemFont,                     -- 按鈕使用字型
+        labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
+        fontSize = 20,                                -- 按鈕文字字體大小
+        emboss = true,                                -- 立體效果
+        onPress = jump_P,
+        
+}
+button_Jump.x = 280; button_Jump.y = 280
