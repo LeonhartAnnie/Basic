@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./lua/?.lua"
+package.path = package.path .. ";Basic/lua/?.lua"
 
 local widget = require( "widget" )
 local physics = require( "physics" )
@@ -44,8 +44,6 @@ local button_Jump = createButton.Jump(player)
 local direction_M = 1
 local speed_M = 7
 local jumpHeight_M = -20
-local table_right = nil
-local table_left = false
 Move_Left = false
 Move_Right = false
 onGround = false
@@ -59,21 +57,22 @@ local function onCollision_P(event)
     end
 end
 
+local function Jump_M()
+    monster:applyLinearImpulse(speed_M, jumpHeight_M, monster.x, monster.y)
+end
+
 local function onCollision_M(event)
-    if event.phase == "began" and event.other.id == "wall" then
+    if event.phase == "ended" and event.other.id == "wall" then
         math.randomseed(os.time())
         direction_M = direction_M * (-1)
-        speed_M=math.random(13)
-        if speed_M<4 then
-            speed_M = 5
-        end
+        speed_M = math.random(5,13)
         speed_M = speed_M*direction_M
         print(speed_M)
     end
 end
-
-player:addEventListener("collision", onCollision_P)
 monster:addEventListener("collision", onCollision_M)
+player:addEventListener("collision", onCollision_P)
+
 
 
 
@@ -84,12 +83,10 @@ local function shoot(event)
     X=event.x
     Y=event.y
 end
-local function Jump_M()
-    monster:applyLinearImpulse(speed_M, jumpHeight_M, monster.x, monster.y)
-end
+
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-timer.performWithDelay(2000,Jump_M,-1)
+timer.performWithDelay(2000,Jump_M,0)
 
 Runtime:addEventListener("enterFrame", function() movement.P_move_left(player) end)
 Runtime:addEventListener("enterFrame", function() movement.P_move_right(player) end)

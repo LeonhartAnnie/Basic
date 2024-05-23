@@ -10,6 +10,7 @@ function generator.addMonster()
     monster.x = -90
     monster.y = 100
     monster.id = "monster"
+    monster.isFixed.rotation = true
     if(ranNum == 2 or ranNum == 3) then
         monster.type = "fly"
     else
@@ -25,6 +26,7 @@ function generator.addPlayer()
     player.y = 147
     player.rotation = 0
     player.id = "player"
+    player.isFixed.rotation = true
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end
@@ -35,6 +37,7 @@ function generator.addwallUp()
     wall_Up.x = 240
     wall_Up.y = -35
     wall_Up.rotation = -180
+    wall_Up.id = "sky"
     physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
 end
 
@@ -52,6 +55,7 @@ function generator.addwall_Left()
     wall_Left.x = -150
     wall_Left.y = 145
     wall_Left.rotation = 90
+    wall_Left.id = "wall"
     physics.addBody( wall_Left, "static", { density=1, friction=0.3, bounce=0.2 } )
     return wall_Left
 end
@@ -61,6 +65,7 @@ function generator.addwall_Right()
     wall_Right.x = 630
     wall_Right.y = 145
     wall_Right.rotation = -90
+    wall_Right.id = "wall"
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
 end
 
