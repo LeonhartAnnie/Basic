@@ -31,10 +31,7 @@ function generator.addPlayer()
     player.rotation = 0
     player.id = "player"
     player.isFixedRotation = true
-<<<<<<< Updated upstream
-=======
     player.health = 6
->>>>>>> Stashed changes
     physics.addBody( player, {density=1, friction=0.3, bounce=0.2} )
     return player
 end
@@ -47,6 +44,7 @@ function generator.addwallUp()
     wall_Up.rotation = -180
     wall_Up.id = "sky"
     physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
+    return wall_Up
 end
 
 function generator.addwallDown()
@@ -75,6 +73,7 @@ function generator.addwall_Right()
     wall_Right.rotation = -90
     wall_Right.id = "wall"
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
+    return wall_Right
 end
 
 return generator
