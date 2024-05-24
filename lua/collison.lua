@@ -1,7 +1,6 @@
 local movement = require("movement")
 local remove = require("remove")
 local collision = {}
-
 local direction_M = 1
 
 function collision.onCollision_M(event,monster)
@@ -11,7 +10,6 @@ function collision.onCollision_M(event,monster)
         direction_M = direction_M * (-1)
         monster.speed_M = math.random(5,20)
         monster.speed_M = monster.speed_M*direction_M
-        print(monster.speed_M)
     elseif event.other.id == "fire" then
         remove.rmMonster(monster)
     end

@@ -1,12 +1,11 @@
 -- 設定橫向模式
-package.path = package.path .. ";Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local movieclip = require("movieclip")
 local physics = require( "physics" )
 local generator = require("generator")
 local createButton = require("createButton")
 local movement = require("movement")
-local collision = require("collison")
 
 local function setLandscapeMode()
     display.setStatusBar(display.HiddenStatusBar) -- 隱藏狀態欄
@@ -36,10 +35,6 @@ local button_right = createButton.right()
 local button_Jump = createButton.Jump(player)
 local button_exit = createButton.Exit()
 
-local health = player.health
-local direction_M = 1
-local speed_M = 7
-local jumpHeight_M = -20
 Move_Left = false
 Move_Right = false
 onGround = false
