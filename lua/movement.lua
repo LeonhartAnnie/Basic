@@ -35,6 +35,17 @@ function movement.fixRotation_M(monster)
     monster.rotation=0
 end
 
+function movement.fly(monster, player)
+    local speed_FM = 10
+    local X = monster.x-player.x
+    local Y = monster.y-player.y
+    local R =(X^2+Y^2)^(0.5)
+    local deltaX = X/R
+    local deltaY = Y/R
+    monster.x = monster.x + speed_FM*deltaX
+    monster.y = monster.y + speed_FM*deltaY
+end
+
 function movement.jump()
     
 end
