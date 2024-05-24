@@ -1,7 +1,7 @@
 local movement = require("movement")
 local remove = require("remove")
 local collision = {}
-local speed_M = 7
+
 local direction_M = 1
 
 function collision.onCollision_M(event,monster)
@@ -9,9 +9,9 @@ function collision.onCollision_M(event,monster)
         event.contact.bounce = 1.5
         math.randomseed(os.time())
         direction_M = direction_M * (-1)
-        speed_M = math.random(5,20)
-        speed_M = speed_M*direction_M
-        print(speed_M)
+        monster.speed_M = math.random(5,20)
+        monster.speed_M = monster.speed_M*direction_M
+        print(monster.speed_M)
     elseif event.other.id == "fire" then
         remove.rmMonster(monster)
     end
@@ -24,7 +24,9 @@ function collision.onCollision_P(event, player)
     elseif event.other.id == "monster" and event.phase == "ended" then
         player.health = player.health-1
         if player.health == 0 then
-            
+            Runtime:addEventListener("enterFrame", player.P_move_left)
+            Runtime:addEventListener("enterFrame", player.P_move_right)
+            player:removeSelf()
         end
     end
 end

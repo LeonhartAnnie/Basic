@@ -1,5 +1,4 @@
 local jumpHeight_P = -15
-local speed_M = 7
 local jumpHeight_M = -20
 local speed_fire = 20
 local movement = {}
@@ -41,7 +40,7 @@ function movement.jump_P(player, event)
 end
 
 function movement.Jump_M(monster)
-    monster:applyLinearImpulse(speed_M, jumpHeight_M, monster.x, monster.y)
+    monster:applyLinearImpulse(monster.speed_M, jumpHeight_M, monster.x, monster.y)
 end
 
 function movement.fixRotation_M(monster)
