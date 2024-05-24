@@ -24,7 +24,7 @@ function generator.addMonster()
     print(x_space[ranPlace])
     physics.addBody( monster, {density=shape_1.density, friction=
     shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
-    monster:addEventListener("collision", collision.onCollision_M)
+    monster:addEventListener("collision", function(eve) collision.onCollision_M(event,monster) end)
     timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
     timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
     return monster
@@ -49,7 +49,7 @@ function generator.addwallUp()
     wall_Up.x = 240
     wall_Up.y = -35
     wall_Up.rotation = -180
-    wall_Up.id = "sky"
+    wall_Up.id="sky"
     physics.addBody( wall_Up, "static", { density=1, friction=0.3, bounce=0.2 } )
     return wall_Up
 end

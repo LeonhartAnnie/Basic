@@ -38,6 +38,7 @@ local button_Jump = createButton.Jump(player)
 local health = player.health
 local direction_M = 1
 local speed_M = 7
+local speed_fire = 20
 local jumpHeight_M = -20
 Move_Left = false
 Move_Right = false
@@ -46,23 +47,35 @@ onGround = false
 timer.performWithDelay(5000, generator.addMonster, 0)
 
 local function shoot(event)
-    local fire = display.newImageRect( "images/fire_01.png",8,8)
+    local fire = display.newImageRect( "images/fire_08.png",20,20)
+    physics.addBody( fire, "dynamic", { isSensor=true } )
+    fire.id="fire"
     fire.x = player.x
     fire.y = player.y
-    transition.to( newLaser, { x=event.x,y=event.y, time=500,
-        onComplete = function() display.remove( newLaser ) end})
-    Fire = movieclip.newAnim({  ";Basic/images/Fire_01.png",";Basic/images/Fire_02.png",
-                            ";Basic/images/Fire_03.png",";Basic/images/Fire_04.png",
-                            ";Basic/images/Fire_05.png",";Basic/images/Fire_06.png",
-                            ";Basic/images/Fire_07.png",";Basic/images/Fire_08.png",
-                            ";Basic/images/Fire_09.png",";Basic/images/Fire_10.png",
-                            ";Basic/images/Fire_11.png",";Basic/images/Fire_12.png"  })
-    Fire:play({startFrame=1,endFrame=9,loop=1,remove=true})
+    local X = event.x-player.x
+    local Y = event.y-player.y
+    local R =(X^2+Y^2)^(0.5)
+    local deltaX = X/R
+    local deltaY = Y/R
+    local function move_fire(event)
+        fire.x = fire.x+speed_fire*deltaX
+        fire.y = fire.y+speed_fire*deltaY
+        Fire.x,Fire.y = fire.x,fire.y
+    end
+    Runtime:addEventListener("enterFrame",move_fire)
+    --transition.to( fire, { x=event.x,y=event.y, time=500,
+    --  onComplete = function() display.remove( fire ) end})
+    Fire = movieclip.newAnim({  "./images/fire_01.png","./images/fire_02.png",
+                                "./images/fire_03.png","./images/fire_04.png",
+                                "./images/fire_05.png","./images/fire_06.png",
+                                "./images/fire_07.png","./images/fire_08.png",
+                                "./images/fire_09.png","./images/fire_10.png",
+                                "./images/fire_11.png","./images/fire_12.png"  })
+    Fire:play({startFrame=1,endFrame=12,loop=2,remove=true})
     Fire.x,Fire.y = fire.x,fire.y --位置
-    Fire.width,Fire.height=8,8
+    Fire.width,Fire.height=20,20
     Fire.setDrag{drag=false}
-    fire:removeSelf()
-    fire = nil 
+    fire:addEventListener("collision", function(event) collision.onCollision_Fire(event, fire) end)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
