@@ -16,6 +16,7 @@ function generator.addMonster()
     monster.id = "monster"
     monster.rotation = 0
     monster.isFixedRotation = true
+    monster.speed_M = 7
     if(ranNum == 2 or ranNum == 3) then
         monster.type = "fly"
     else

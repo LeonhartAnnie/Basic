@@ -63,7 +63,7 @@ function createButton.Jump(player)
             labelColor = { default = { 0, 0, 1 } },       -- 按鈕字體顏色   
             fontSize = 20,                                -- 按鈕文字字體大小
             emboss = true,                                -- 立體效果
-            x = 280,
+            x = 550,
             y = 280,
             onEvent = function (event) movement.jump_P(player, event) end
     }
