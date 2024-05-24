@@ -1,8 +1,21 @@
 local jumpHeight_P = -15
 local speed_M = 7
 local jumpHeight_M = -20
+local speed_fire = 20
 local movement = {}
 
+function movement.move_fire(event, fire, player)
+    if fire then
+        local X = event.x-player.x
+        local Y = event.y-player.y
+        local R =(X^2+Y^2)^(0.5)
+        local deltaX = X/R
+        local deltaY = Y/R
+        fire.x = fire.x+speed_fire*deltaX
+        fire.y = fire.y+speed_fire*deltaY
+        Fire.x,Fire.y = fire.x,fire.y
+    end
+end
 
 function movement.P_move_left(player)
     if Move_Left == true then

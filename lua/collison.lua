@@ -1,3 +1,4 @@
+local movement = require("movement")
 local collision = {}
 local speed_M = 7
 local direction_M = 1
@@ -25,13 +26,14 @@ function collision.onCollision_P(event, player)
     end
 end
 
-function collision.onCollision_Fire(event, fire)
+function collision.onCollision_Fire(event, fire, player)
     if event.phase == "began" then
         if event.other.id == "ground" or event.other.id == "wall" or event.other.id == "sky" or event.other.id == "monster" then
             if fire == nil then
                 return 0
             end
-            remove(fire)
+
+            fire = nil
         end
     end
 end

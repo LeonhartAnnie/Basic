@@ -23,7 +23,7 @@ function generator.addMonster()
     end
     physics.addBody( monster, {density=shape_1.density, friction=
     shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
-    monster:addEventListener("collision", function(eve) collision.onCollision_M(event,monster) end)
+    monster:addEventListener("collision", function(event) collision.onCollision_M(event,monster) end)
     timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
     timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
     return monster
@@ -80,6 +80,17 @@ function generator.addwall_Right()
     wall_Right.id = "wall"
     physics.addBody( wall_Right, "static", { density=1, friction=0.3, bounce=0.2 } )
     return wall_Right
+end
+
+function generator.addFire(player)
+    local fire = display.newImageRect( "images/fire_08.png",20,20)
+    physics.addBody( fire, "dynamic", { isSensor=true} )
+    physics.setGravity(0, 0)
+    fire.id="fire"
+    fire.x = player.x
+    fire.y = player.y
+    fire:addEventListener("collision", function(event) collision.onCollision_Fire(event, fire, player) end)
+    return fire
 end
 
 return generator
