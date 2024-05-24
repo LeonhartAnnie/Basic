@@ -1,4 +1,5 @@
 local movement = require("movement")
+local remove = require("remove")
 local collision = {}
 local speed_M = 7
 local direction_M = 1
@@ -12,7 +13,7 @@ function collision.onCollision_M(event,monster)
         speed_M = speed_M*direction_M
         print(speed_M)
     elseif event.other.id == "fire" then
-        remove(monster)
+        remove.rmMonster(monster)
     end
 end
 
@@ -22,18 +23,19 @@ function collision.onCollision_P(event, player)
         --print(onGround)
     elseif event.other.id == "monster" and event.phase == "ended" then
         player.health = player.health-1
-        print(player.health)
+        if player.health == 0 then
+            
+        end
     end
 end
 
-function collision.onCollision_Fire(event, fire, player)
+function collision.onCollision_Fire(event, fire)
     if event.phase == "began" then
         if event.other.id == "ground" or event.other.id == "wall" or event.other.id == "sky" or event.other.id == "monster" then
             if fire == nil then
                 return 0
             end
-
-            fire = nil
+            remove.rmFire(fire)
         end
     end
 end

@@ -24,8 +24,10 @@ function generator.addMonster()
     physics.addBody( monster, {density=shape_1.density, friction=
     shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
     monster:addEventListener("collision", function(event) collision.onCollision_M(event,monster) end)
-    timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
-    timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
+    local jump_timer = timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
+    local fixRotation_timer = timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
+    monster.jump_timer = jump_timer
+    monster.fixRotation_timer = fixRotation_timer
     return monster
 end
 
@@ -84,8 +86,8 @@ end
 
 function generator.addFire(player)
     local fire = display.newImageRect( "images/fire_08.png",20,20)
-    physics.addBody( fire, "dynamic", { isSensor=true} )
-    physics.setGravity(0, 0)
+    physics.addBody( fire, "dynamic", { isSensor=true,} )
+
     fire.id="fire"
     fire.x = player.x
     fire.y = player.y

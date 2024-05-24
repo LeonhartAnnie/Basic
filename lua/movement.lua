@@ -5,6 +5,7 @@ local speed_fire = 20
 local movement = {}
 
 function movement.move_fire(event, fire, player)
+    print(event.x, fire.x, player.x)
     if fire then
         local X = event.x-player.x
         local Y = event.y-player.y

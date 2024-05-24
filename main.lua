@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local movieclip = require("movieclip")
 local physics = require( "physics" )
@@ -39,7 +39,6 @@ local button_exit = createButton.Exit()
 local health = player.health
 local direction_M = 1
 local speed_M = 7
-
 local jumpHeight_M = -20
 Move_Left = false
 Move_Right = false
@@ -51,7 +50,9 @@ local monster = generator.addMonster()
 
 local function shoot(event)
     local fire = generator.addFire(player)
-    Runtime:addEventListener("enterFrame",function() movement.move_fire(event, fire, player) end)
+    local move_fire = function() movement.move_fire(event, fire, player) end
+    fire.move_fire = move_fire
+    Runtime:addEventListener("enterFrame", move_fire)
     --transition.to( fire, { x=event.x,y=event.y, time=500,
     --  onComplete = function() display.remove( fire ) end})
     Fire = movieclip.newAnim({  "./images/fire_01.png","./images/fire_02.png",
@@ -66,13 +67,18 @@ local function shoot(event)
     Fire.setDrag{drag=false}
 end
 
-
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
 -- 監聽螢幕觸控事件來觸發射擊
+local P_move_left = function() movement.P_move_left(player) end
+local P_move_right = function() movement.P_move_right(player) end
+
+player.P_move_left = P_move_left
+player.P_move_right = P_move_right
+
 Runtime:addEventListener("touch", shoot)
-Runtime:addEventListener("enterFrame", function() movement.P_move_left(player) end)
-Runtime:addEventListener("enterFrame", function() movement.P_move_right(player) end)
+Runtime:addEventListener("enterFrame", P_move_left)
+Runtime:addEventListener("enterFrame", P_move_right)
 
 
 
