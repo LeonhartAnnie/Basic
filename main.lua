@@ -45,8 +45,7 @@ Move_Right = false
 onGround = false
 
 
-local monster = generator.addMonster()
---timer.performWithDelay(5000, generator.addMonster, 0)
+timer.performWithDelay(5000, generator.addMonster, 0)
 
 local function shoot(event)
     local fire = generator.addFire(player)
