@@ -70,4 +70,29 @@ function createButton.Jump(player)
     return button_Jump
 end
 
+local exitGame=function(event)
+    if system.getInfo("platformName") == "Android" or system.getInfo("platformName") == "Win" then
+        native.requestExit()
+    else
+        os.exit()
+    end
+end
+
+function createButton.Exit()
+    local exitButton = widget.newButton
+    {
+            defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
+            overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
+            label = "Exit",                              -- 按鈕上顯示的文字
+            font = native.systemFont,
+            labelColor = { default = { 0, 0, 1 } },
+            fontSize = 20,
+            emboss = true,
+            x = 550,
+            y = 15,
+            onPress = exitGame,
+    }
+    return exitButton
+end
+
 return createButton

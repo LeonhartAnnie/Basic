@@ -23,7 +23,7 @@ function generator.addMonster()
     end
     physics.addBody( monster, {density=shape_1.density, friction=
     shape_1.friction, bounce=shape_1.bounce, shape=shape_1})
-    monster:addEventListener("collision", function(eve) collision.onCollision_M(event,monster) end)
+    monster:addEventListener("collision", function(event) collision.onCollision_M(event,monster) end)
     timer.performWithDelay(2000,function() movement.Jump_M(monster) end,0)
     timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
     return monster

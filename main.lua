@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./lua/?.lua"
+package.path = package.path .. ";Basic/lua/?.lua"
 
 local movieclip = require("movieclip")
 local physics = require( "physics" )
@@ -34,6 +34,7 @@ local wall_Left = generator.addwall_Left()
 local button_left = createButton.left()
 local button_right = createButton.right()
 local button_Jump = createButton.Jump(player)
+local button_exit = createButton.Exit()
 
 local health = player.health
 local direction_M = 1
@@ -79,6 +80,8 @@ local function shoot(event)
     Fire.width,Fire.height=20,20
     Fire.setDrag{drag=false}
 end
+
+
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
 -- 監聽螢幕觸控事件來觸發射擊
