@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";Basic/lua/?.lua"
+package.path = package.path .. ";./lua/?.lua"
 
 local movieclip = require("movieclip")
 local physics = require( "physics" )
@@ -44,7 +44,9 @@ Move_Left = false
 Move_Right = false
 onGround = false
 
-timer.performWithDelay(5000, generator.addMonster, 0)
+
+local monster = generator.addMonster()
+--timer.performWithDelay(5000, generator.addMonster, 0)
 
 local function shoot(event)
     local fire = display.newImageRect( "images/fire_08.png",20,20)

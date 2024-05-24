@@ -9,7 +9,6 @@ function movement.P_move_left(player)
         player.x = player.x-5
         player.rotation =0
         --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )
-        print(Move_Left)
     end
 end
 
@@ -18,7 +17,6 @@ function movement.P_move_right(player)
         player.x=player.x+5
         player.rotation =0
         --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )
-        print(Move_Right)
     end
 end
 
