@@ -61,6 +61,7 @@ local function shoot(event)
         fire.x = fire.x+speed_fire*deltaX
         fire.y = fire.y+speed_fire*deltaY
         Fire.x,Fire.y = fire.x,fire.y
+        fire:addEventListener("collision", function(event) collision.onCollision_Fire(event, fire) end)
     end
     Runtime:addEventListener("enterFrame",move_fire)
     --transition.to( fire, { x=event.x,y=event.y, time=500,
@@ -75,15 +76,11 @@ local function shoot(event)
     Fire.x,Fire.y = fire.x,fire.y --位置
     Fire.width,Fire.height=20,20
     Fire.setDrag{drag=false}
-    fire:addEventListener("collision", function(event) collision.onCollision_Fire(event, fire) end)
 end
 -- 呼叫函數設置橫向模式
 setLandscapeMode()
-
-
 -- 監聽螢幕觸控事件來觸發射擊
 Runtime:addEventListener("touch", shoot)
-
 Runtime:addEventListener("enterFrame", function() movement.P_move_left(player) end)
 Runtime:addEventListener("enterFrame", function() movement.P_move_right(player) end)
 
