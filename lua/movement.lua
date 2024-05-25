@@ -18,6 +18,7 @@ end
 
 function movement.P_move_left(player)
     if Move_Left == true then
+        Move_Right = false
         player.x = player.x-5
         player.rotation =0
         --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )
@@ -26,6 +27,7 @@ end
 
 function movement.P_move_right(player)
     if Move_Right == true then
+        Move_Left = false
         player.x=player.x+5
         player.rotation =0
         --transition.moveTo( player, { x=player.x-5, y=player.y, time=100 } )

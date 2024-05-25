@@ -23,8 +23,8 @@ function collision.onCollision_P(event, player)
     elseif event.other.id == "monster" and event.phase == "ended" then
         player.health = player.health-1
         if player.health == 0 then
-            Runtime:addEventListener("enterFrame", player.P_move_left)
-            Runtime:addEventListener("enterFrame", player.P_move_right)
+            Runtime:removeEventListener("enterFrame", player.P_move_left)
+            Runtime:removeEventListener("enterFrame", player.P_move_right)
             player:removeSelf()
             composer.gotoScene("scenes.endScene")
         end
