@@ -1,5 +1,5 @@
 -- 設定橫向模式
-package.path = package.path .. ";./lua/?.lua"
+package.path = package.path .. ";Basic/lua/?.lua"
 
 local movieclip = require("movieclip")
 local physics = require( "physics" )
@@ -26,7 +26,7 @@ Move_Left = false
 Move_Right = false
 onGround = false
 
-composer.gotoScene("scenes.mainScene")
+composer.gotoScene("scenes.mainScene",{time=1000, effect="zoomInOutRotate"})
 
 -- 呼叫函數設置橫向模式
 setLandscapeMode()

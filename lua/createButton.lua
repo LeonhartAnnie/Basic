@@ -1,4 +1,5 @@
 local widget = require( "widget" )
+local composer = require ("composer")
 local movement = require("movement")
 local createButton = {}
 
@@ -93,6 +94,28 @@ function createButton.Exit()
             onPress = exitGame,
     }
     return exitButton
+end
+
+local restart=function ()
+    composer.removeScene("scenes.endScene")
+    composer.gotoScene("scenes.mainScene", {time=1000, effect="flip"})
+end
+
+function createButton.Restart()
+    local restartButton = widget.newButton
+    {
+            defaultFile = "images/explode1.png",          -- 未按按鈕時顯示的圖片
+            overFile = "images/explode2.png",             -- 按下按鈕時顯示的圖片
+            label = "Restart",                              -- 按鈕上顯示的文字
+            font = native.systemFont,
+            labelColor = { default = { 0, 0, 1 } },
+            fontSize = 20,
+            emboss = true,
+            x = display.contentCenterX,
+            y = display.contentCenterY+40,
+            onPress = restart,
+    }
+    return restartButton
 end
 
 return createButton
