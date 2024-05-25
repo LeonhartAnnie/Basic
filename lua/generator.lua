@@ -3,7 +3,7 @@ local collision = require("collison")
 local movement = require("movement")
 local generator = {}
 
-function generator.addMonster()
+function generator.addMonster(sceneGroup)
     local shape_1 = { -4.99999380111694,-24.7999973297119, -29.7999935150146,0.800002694129944, -29.3999938964844,14.4000024795532, -18.9999942779541,23.2000026702881, 17.8000068664551,24.8000030517578, 29.8000068664551,14.0000028610229, 29.4000072479248,-5.59999752044678, 8.60000610351563,-24.7999973297119 }
     shape_1.density = 1; shape_1.friction = 0.3; shape_1.bounce = 0.2; 
     local ranNum = math.random(1, 4)
@@ -29,6 +29,7 @@ function generator.addMonster()
     local fixRotation_timer = timer.performWithDelay(50,function() movement.fixRotation_M(monster) end,0)
     monster.jump_timer = jump_timer
     monster.fixRotation_timer = fixRotation_timer
+    sceneGroup:insert(monster)
     return monster
 end
 

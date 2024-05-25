@@ -1,11 +1,12 @@
 local movement = require("movement")
 local remove = require("remove")
+local composer = require("composer")
 local collision = {}
 local direction_M = 1
 
 function collision.onCollision_M(event,monster)
     if event.phase == "began" and (event.other.id == "wall" or event.other.id == "monster") then
-        event.contact.bounce = 1.5
+        event.contact.bounce = 1.01
         math.randomseed(os.time())
         direction_M = direction_M * (-1)
         monster.speed_M = math.random(5,20)
@@ -25,6 +26,7 @@ function collision.onCollision_P(event, player)
             Runtime:addEventListener("enterFrame", player.P_move_left)
             Runtime:addEventListener("enterFrame", player.P_move_right)
             player:removeSelf()
+            composer.gotoScene("scenes.endScene")
         end
     end
 end

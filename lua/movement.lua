@@ -4,6 +4,7 @@ local speed_fire = 20
 local movement = {}
 
 function movement.move_fire(event, fire, player)
+    print(event.x, fire.x, player.x)
     if fire then
         local X = event.x-player.x
         local Y = event.y-player.y
@@ -12,7 +13,6 @@ function movement.move_fire(event, fire, player)
         local deltaY = Y/R
         fire.x = fire.x+speed_fire*deltaX
         fire.y = fire.y+speed_fire*deltaY
-        Fire.x,Fire.y = fire.x,fire.y
     end
 end
 
