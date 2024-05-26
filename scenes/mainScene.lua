@@ -65,13 +65,13 @@ function scene:create(event)
         Fire.width,Fire.height=20,20
         Fire.setDrag{drag=false}
     end
-    
+
     local P_move_left = function() movement.P_move_left(player) end
     local P_move_right = function() movement.P_move_right(player) end
 
     player.P_move_left = P_move_left
     player.P_move_right = P_move_right
-    
+
     Runtime:addEventListener("touch", shoot)
     Runtime:addEventListener("enterFrame", P_move_left)
     Runtime:addEventListener("enterFrame", P_move_right)
@@ -93,7 +93,7 @@ function scene:hide(event)
             timer.cancel(self.monsterTimer)
             self.monsterTimer = nil
         end
-        
+
         if self.scoreTimer then
             timer.cancel(self.scoreTimer)
             self.scoreTimer = nil
